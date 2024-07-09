@@ -5,7 +5,7 @@ name = "ownCloud"
 description.en = "Online storage, file sharing platform"
 description.fr = "Stockage en ligne, plateforme de partage de fichiers"
 
-version = "5.0.0~ynh3"
+version = "6.1.0~ynh1"
 
 maintainers = ["eric_G"]
 
@@ -17,7 +17,8 @@ code = "https://github.com/owncloud/ocis"
 cpe = "cpe:2.3:a:owncloud:owncloud"
 
 [integration]
-yunohost = ">= 11.2"
+yunohost = ">= 11.2.20"
+helpers_version = "2.1"
 architectures = ["amd64", "arm64", "armhf", "i386"]
 multi_instance = false
 
@@ -25,8 +26,8 @@ ldap = false
 
 sso = false
 
-disk = "50M"
-ram.build = "300M"
+disk = "100M"
+ram.build = "800M"
 ram.runtime = "50M"
 
 [install]
@@ -41,7 +42,7 @@ ram.runtime = "50M"
     ask.en = "Choose the application language"
     ask.fr = "Choisissez la langue de l'application"
     type = "select"
-    choices = ["de", "fr", "en"]
+    choices = ["cs", "de", "en", "es", "fr", "gl", "it"]
     default = "fr"
 
     [install.password]
@@ -50,30 +51,34 @@ ram.runtime = "50M"
 [resources]
 
         [resources.sources.main]
-        amd64.url = "https://download.owncloud.com/ocis/ocis/testing/5.0.0-alpha.3/ocis-5.0.0-alpha.3-linux-amd64"
-        amd64.sha256 = "e8712652b74d44e0c34ab92c389ba4751ffaf7e29a0465f2c3bf074a22937dd9"
-        arm64.url = "https://download.owncloud.com/ocis/ocis/testing/5.0.0-alpha.3/ocis-5.0.0-alpha.3-linux-arm64"
-        arm64.sha256 = "4d891e35ef68a65460280911e81139b07ec03b98bcf355a70f6cdcf539ff63e5"
-        armhf.url = "https://download.owncloud.com/ocis/ocis/testing/5.0.0-alpha.3/ocis-5.0.0-alpha.3-linux-arm"
-        armhf.sha256 = "840f752a1c07d0742e7d6898524740ca7fc6e44fa212c6ce810b6cd0f63f6bd7"
-        i386.url = "https://download.owncloud.com/ocis/ocis/testing/5.0.0-alpha.3/ocis-5.0.0-alpha.3-linux-386"
-        i386.sha256 = "71a274c6fdcbfe072daf5188807ed4d0cd4520f31aee707c5f5fa933e1c3e78a"
+        amd64.url = "https://github.com/owncloud/ocis/releases/download/v6.1.0/ocis-6.1.0-linux-amd64"
+        amd64.sha256 = "3bfd3c2a3e0efd4168998f1c9a9ce7d0075a4b5825e90bd3a1e1e513f5bd958c"
+        arm64.url = "https://github.com/owncloud/ocis/releases/download/v6.1.0/ocis-6.1.0-linux-arm64"
+        arm64.sha256 = "238ec823b14d10f6db8c999962e88579c1c4b98241f68a9fad52f60f0d983a3d"
+        armhf.url = "https://github.com/owncloud/ocis/releases/download/v6.1.0/ocis-6.1.0-linux-arm"
+        armhf.sha256 = "de6fcb0581fa611522693157ea99317e08e38b986b9e7cad67c11e56cff82dae"
+        i386.url = "https://github.com/owncloud/ocis/releases/download/v6.1.0/ocis-6.1.0-linux-386"
+        i386.sha256 = "a6d29436d57c27d9780ebdaf2249bdef3a9943d493964eae97528c3615fc8df1"
         in_subdir = false
         rename = "ocis"
 
-    [resources.ports]
-    main.default = 9200
+        autoupdate.strategy = "latest_github_release"
+        autoupdate.asset.amd64 = "^ocis-.*-linux-amd64$"
+        autoupdate.asset.arm64 = "^ocis-.*-linux-arm64$"
+        autoupdate.asset.i386 = "^ocis-.*-linux-386$"
 
     [resources.system_user]
 
     [resources.install_dir]
 
     [resources.data_dir]
+    subdirs = ["config"]
+
+    [resources.ports]
 
     [resources.permissions]
     main.url = "/"
     main.auth_header = false
-
     api.url = "/api"
     api.auth_header = false
     api.show_tile = false
